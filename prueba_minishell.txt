@@ -1,0 +1,202 @@
+Comandos en:
+/bin/:
+df,launchctl,pwd,test,bash,domainname,link,rm,unlink,cat,echo,ln,rmdir,wait4path,chmod,ed,ls,sh,zsh,cp,expr,mkdir,sleep,csh,hostname,mv,stty,date,kill,pax,sync,dd,ksh,ps,tcsh
+
+1.- Ejecute un comando sencillo con un PATH absoluto como /bin/ls o cualquier otro comando sin opciones
+
+/bin/ls 
+/bin/pwd
+/bin/echo
+/bin/date
+
+2.- Argumentos
+- Ejecute un comando sencillo con un PATH absoluto como /bin/ls o cualquier otro comando, con opciones pero sin '' ni ""
+
+/bin/ls -l *.c
+/bin/pwd
+/bin/echo
+/bin/date '+DATE: %m/%d/%y%nTIME:%H:%M:%S'
+/bin/date "+%m/%d/%y" 
+/bin/date "+%Y%m%d"
+/bin/date +'%-4.4h %2.1d %H:%M'
+/bin/mkdir dirprueba
+/bin/ls	 -lf dirprueba
+/bin/rmdir dirprueba 
+
+- Repita varias veces con diferentes comandos y argumentos.
+
+3.- echo (only opción: -n) (\n para hacer un intro, \t para un tabulador,\v para un “tabulador vertical”,\b para backspace)
+- Ejecute el comando "echo" con y sin argumentos u opciones (only -n)
+echo
+echo -n
+echo 'ejemplo\nintro' 
+echo -n 'ejemplo\nintro' 'tab\ttab' 
+echo -n 'tab\ttab' 
+echo 'ejemplo\nintro' 'lol\vlol'
+echo -n	 'ejemplo\nintro' 'a\bb' 
+echo ejemplo\nintro "a\bb" \\
+echo \\ \@ \#	\€ sin comillas "comillas" 'Comillas simples'
+echo $? Otro
+echo /{"pp"}
+echo /{'pp'}
+echo /{/@'pp'}
+
+- Repita varias veces con distintos argumentos
+
+4.- exit
+- Ejecute el comando "exit" con y sin argumentos
+
+exit 0  ---> echo $? ---> 0
+exit 1	---> echo $? ---> 1
+exit 1 2 3 ---> logout (ver como sale exit o logout) --> echo $? --> 1
+		-bash: exit: too many arguments
+exit 0 2 3 ---> logout (ver como sale exit o logout) --> echo $? --> 1
+		-bash: exit: too many arguments
+
+- Repita varias veces con distintos argumentos
+- No se olvide de volver a abrir el minishell
+
+3.- Valor de retorno de un proceso.
+- Ejecute comandos sencillos con un PATH absoluto como /bin/ls o cualquier otro comando con argumentos pero sin '' ni "", después ejecute "echo $?"
+
+/bin/ls ---> echo $? ---> 0
+
+- Compruebe el valor que se muestra en pantalla. Puede hacer lo mismo con el bash y comparar.
+
+
+- Repita varias veces con distintos comandos y argumentos, utilice comandos que no funcionen como '/bin/ls archivonulo'
+
+/bin/ls archivonulo ---> ls: archivonulo: No such file or directory ---> echo $? ---> 1
+
+
+
+4.- Punto y coma
+- Ejecute varios comandos sencillos con un PATH absoluto y con argumento, pero separados con ';'
+
+echo ; echo
+echo ;; ---> -bash: syntax error near unexpected token `;;'
+pwd ;; ---> -bash: syntax error near unexpected token `;;'
+echo "jj" ; ls -f
+
+
+- Repita varias veces con comandos distintos; no se olvide de hacer pruebas con espacios y sin ellos alrededor de los ';'
+
+echo "jj"; ls -f;
+echo "jj" ; ; ls -f;  	(spc y tabs final) --> echo "jj" ; ; ls -f; (NO FUNCIONA DEBERIA ERROR -bash: syntax error near unexpected token `;')
+echo "kk"; ls; mkdir prueba; ls ; rmdir prueba;	ls -->
+
+5.- Señales
+- Pruebe ctrl-C en un prompt vacío ---> provoca salto de linea ($? =1)
+- Pruebe ctrl-\ en un prompt vacío ---> solo suena
+- Pruebe ctrl-D en un prompt vacío ---> sale
+- Pruebe ctrl-C en un prompt después de haber escrito algo ---> provoca salto de linea
+- Pruebe ctrl-D en un prompt después de haber escrito algo ---> no sale solo suena
+- Pruebe ctrl-\ en un prompt después de haber escrito algo ---> no sale solo suena
+- Pruebe ctrl-C después de haber ejecutado un comando que provoque un bloqueo, como cat o grep sin argumento. --> imprime ^C con salto de linea.
+- Pruebe ctrl-\ después de haber ejecutado un comando que provoque un bloqueo, como cat o grep sin argumento --> solo suena, ctrl+c .
+- Pruebe ctrl-D después de haber ejecutado un comando que provoque un bloqueo, como cat o grep sin argumento ---> solo suena se bloquea, ctrl+c.
+- Repita varias veces utilizando comandos distintos
+
+6.- Comillas
+- Ejecute un comando sencillo con un PATH absoluto y con argumento, pero esta vez utilice comillas (Añada ';' y espacios en el interior de las comillas)
+- Utilice argumentos vacíos y '\'
+- No lo intente con líneas múltiples
+
+7.- env
+- Compruebe que env le muestra las variables de entorno correctas
+
+env ----> 
+
+8.- export
+- Exporte variables de entorno, nuevas y remplace las antiguas
+
+export a=10 --> env 
+export a=1  --> env
+export b	---> env (no lo graba)
+export b=   12 ---> -bash: export: `12': not a valid identifier
+export a ==12 ---> -bash: export: `==12': not a valid identifier
+
+- Compruebe el resultado con env
+
+9.- unset
+- Exporte variables de entorno, nuevas y remplace las antiguas
+export a=10 b ==10 c=10 --> crea a y b y da error en b -bash: export: `==10': not a valid identifier
+
+- Utilice "unset" para retirar algunas
+
+unset a x b  ---> borra a y b, y no da ningún error aunque x no exista
+unset	     ---> no hace nada.
+
+- Compruebe el resultado con env
+
+10.- Variables de entorno
+- Ejecute echo con variables "$" como argumento
+
+echo "$x" ---> no existe --> salto de linea
+echo "$a" = echo $a
+echo '$a' ---> imprime "$a"
+echo $$ ---> 50736 ¿no se que es?
+echo $"a" ---> imprime "a"
+
+- Compruebe que las comillas alrededor de las $variables funcionan correctamente (como en el bash)
+
+11.- cd
+- Utilice el comando cd para desplazarse por el árbol de los directorios y utilice /bin/ls para comprobar que se encuentra en el directorio correcto
+
+cd ..
+cd .
+cd error .. ---> -bash: cd: error: No such file or directory
+
+- Repita varias veces con cd que funcionen y que no funcionen
+- Pruebe '.' y '..' como argumento
+
+12.- pwd
+- Utilice el comando 'pwd', con y sin argumento
+
+pwd 
+pwd f
+export x=$(pwd) ------> OJO NO SE SI HAY QUE TENER EN CUENTA ESTO
+echo $(pwd) ----->
+
+- Repita varias veces en directorios distintos
+
+
+13.- PATH relativo
+- Ejecute comandos utilizando un PATH relativo
+- Repita varias veces en otros directorios con un PATH relativo complejo (con muchos ..)
+
+14. PATH de entorno
+- Ejecute comandos pero sin PATexit compruebe si sigue funcionando
+
+unset PATH
+ls ---> [Minishell]: ls: command not found
+
+- Añada varios directorios a PATH (directory1:directory2) y compruebe que se llama a los directorios de izquierda a derecha
+
+15. Comillas simples
+- Ejecute comandos con comillas simples como argumento
+- Pruebe argumentos vacíos
+- Pruebe variables de entorno, espacios, ';' dentro de las comillas
+
+
+
+
+16. Redirección
+- Ejecute comandos con redirecciones < y/o >
+- Repita varias veces con distintos comandos y argumentos y, de vez en cuando, remplace > por >>
+- Compruebe si varias instancias de la misma redirección fallan
+
+17. Tuberías
+- Ejecute comandos con tuberías (también llamadas "pipes") como 'cat file | grep bla | more'
+- Repita varias veces con distintos comandos y argumentos
+- Pruebe comandos que fallen como 'ls archivonulo | grep bla | more'
+- Combine tuberías y redirecciones
+
+18. Seamos locos
+- Ejecute comandos que no funcionen como 'dskdskdksd' y compruebe que todo funciona según lo previsto
+- Pruebe comandos muy muy largos, con montones de argumentos
+- Diviértase con este magnífico minishell y disfrútelo
+
+ERRORES DE SINTASIS:
+fdsfdsf< ----> -bash: syntax error near unexpected token `newline' ---> echo $? ----> 258
+echo ;;  ----> -bash: syntax error near unexpected token `;;' ----> echo $? ----> 258
